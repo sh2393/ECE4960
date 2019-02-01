@@ -1,0 +1,20 @@
+integer overflow observation: factorial
+15! = 2004310016
+integer overflowed
+
+divide by zero observation
+10/0
+Exception: Divide by zero
+
+floating point type overflow
+
+single precision float type
+float max squared = inf
+float overflow exception: PASSED
+
+double type
+float max squared = 6.80565e+38
+double max squared = inf
+double overflow exception: PASSED
+
+
