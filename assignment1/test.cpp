@@ -23,6 +23,14 @@ int main(){
 	//floating poitn exceptions
 	fp_overflow();
 	printf("\n");
+	fp_infinity();
+	printf("\n");
+	fp_nan();
+	printf("\n");
+	fp_signed_zero();
+	printf("\n");
+	fp_underflow();
+	printf("\n");
 
 	log.close();
 	return 0;

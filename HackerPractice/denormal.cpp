@@ -15,4 +15,3 @@ int main(){
 	}
 }
 
-//platform does not support denormal

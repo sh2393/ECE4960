@@ -11,10 +11,6 @@
 
 void fp_overflow(void);
 
-//Generate INF and NINF
-//test their propogation and interaction
-//TODO: equivalence
-//im not sure how to test propogation
 void fp_infinity(void);
 
 void fp_nan(void);

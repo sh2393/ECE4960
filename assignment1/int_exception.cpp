@@ -34,9 +34,8 @@ void divide_by_zero()
 
 	try
 	{
-		printf("%d/%d\n", m, n);
 		int result = int_division(m, n);
-		cout << result << endl;
+		printf("%d/%d = %d", m, n, result);
 	}
 	catch(exception& e)
 	{
