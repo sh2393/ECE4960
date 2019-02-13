@@ -1,204 +1,306 @@
-integer overflow observation: factorial
-15! = 2004310016
-integer overflowed
 
-divide by zero observation
+================
+15!
+================
+
+15! generated integer overflow
+================
+2/0
+================
+
 Exception: Divide by zero
 
 
-floating point overflow
-double max squared = inf
-double overflow exception: PASSED
+=================
+DBL_MAX*DBL_MAX
+=================
 
-floating point positive infinity
-1.0/0.0 = infinfinity equivalence
-INF == INF
-infinity propogation
-(1.0/0.0)/200 = inf
+fp_overflow generated infinity
+Equivalence: inf equals to inf
+Infinity propogates
 
-0.0/0.0 = nan
-sqrt(-1.0) = nan
-isnan(0.0/0.0) : 1
-isnan(sqrt(-1.0_ : 1
-NaN equivalence
-Nan != Nan
-NaN propogation
-(0.0/0.0)*200 = nan
-Nan * NINF = nan
-Nan * INF = inf
+=================
+1.0/0.0
+=================
 
-signed zero
-log(px) = -709.196209
-log(nx) = nan
-sin(px)/px = 1.000000
-sin(nx)/nx = 1.000000
-sin(nx)/px = -1.000000
-log(px) = -711.498794
-log(nx) = nan
-sin(px)/px = 1.000000
-sin(nx)/nx = 1.000000
-sin(nx)/px = -1.000000
-log(px) = -713.801379
-log(nx) = nan
-sin(px)/px = 1.000000
-sin(nx)/nx = 1.000000
-sin(nx)/px = -1.000000
-log(px) = -716.103964
-log(nx) = nan
-sin(px)/px = 1.000000
-sin(nx)/nx = 1.000000
-sin(nx)/px = -1.000000
-log(px) = -718.406549
-log(nx) = nan
-sin(px)/px = 1.000000
-sin(nx)/nx = 1.000000
-sin(nx)/px = -1.000000
-log(px) = -720.709134
-log(nx) = nan
-sin(px)/px = 1.000000
-sin(nx)/nx = 1.000000
-sin(nx)/px = -1.000000
-log(px) = -723.011719
-log(nx) = nan
-sin(px)/px = 1.000000
-sin(nx)/nx = 1.000000
-sin(nx)/px = -1.000000
-log(px) = -725.314304
-log(nx) = nan
-sin(px)/px = 1.000000
-sin(nx)/nx = 1.000000
-sin(nx)/px = -1.000000
-log(px) = -727.616889
-log(nx) = nan
-sin(px)/px = 1.000000
-sin(nx)/nx = 1.000000
-sin(nx)/px = -1.000000
-log(px) = -729.919475
-log(nx) = nan
-sin(px)/px = 1.000000
-sin(nx)/nx = 1.000000
-sin(nx)/px = -1.000000
-log(px) = -732.222061
-log(nx) = nan
-sin(px)/px = 1.000000
-sin(nx)/nx = 1.000000
-sin(nx)/px = -1.000000
-log(px) = -734.524656
-log(nx) = nan
-sin(px)/px = 1.000000
-sin(nx)/nx = 1.000000
-sin(nx)/px = -1.000000
-log(px) = -736.827241
-log(nx) = nan
-sin(px)/px = 1.000000
-sin(nx)/nx = 1.000000
-sin(nx)/px = -1.000000
-log(px) = -739.131804
-log(nx) = nan
-sin(px)/px = 1.000000
-sin(nx)/nx = 1.000000
-sin(nx)/px = -1.000000
-log(px) = -741.444340
-log(nx) = nan
-sin(px)/px = 1.000000
-sin(nx)/nx = 1.000000
-sin(nx)/px = -1.000000
-log(px) = -743.746925
-log(nx) = nan
-sin(px)/px = 1.000000
-sin(nx)/nx = 1.000000
-sin(nx)/px = -1.000000
-log(px) = -inf
-log(nx) = -inf
-sin(px)/px = nan
-sin(nx)/nx = nan
-sin(nx)/px = nan
-log(px) = -inf
-log(nx) = -inf
-sin(px)/px = nan
-sin(nx)/nx = nan
-sin(nx)/px = nan
-log(px) = -inf
-log(nx) = -inf
-sin(px)/px = nan
-sin(nx)/nx = nan
-sin(nx)/px = nan
+fp_infinity generated infinity
 
-gradual underflow
-x/10 = 1.2345678901234567e-308
-y-z = -0.0000000000000000
-y!=z
-sin(1.234567890123456789*x)/x = 1.234568
-x/10 = 1.2345678901234572e-309
-y-z = -0.0000000000000000
-y!=z
-sin(1.234567890123456789*x)/x = 1.234568
-x/10 = 1.2345678901234572e-310
-y-z = -0.0000000000000000
-y!=z
-sin(1.234567890123456789*x)/x = 1.234568
-x/10 = 1.2345678901232595e-311
-y-z = -0.0000000000000000
-y!=z
-sin(1.234567890123456789*x)/x = 1.234568
-x/10 = 1.2345678901242477e-312
-y-z = -0.0000000000000000
-y!=z
-sin(1.234567890123456789*x)/x = 1.234568
-x/10 = 1.2345678901143664e-313
-y-z = -0.0000000000000000
-y!=z
-sin(1.234567890123456789*x)/x = 1.234568
-x/10 = 1.2345678900155532e-314
-y-z = -0.0000000000000000
-y!=z
-sin(1.234567890123456789*x)/x = 1.234568
-x/10 = 1.2345678910036845e-315
-y-z = -0.0000000000000000
-y!=z
-sin(1.234567890123456789*x)/x = 1.234568
-x/10 = 1.2345678761817151e-316
-y-z = -0.0000000000000000
-y!=z
-sin(1.234567890123456789*x)/x = 1.234568
-x/10 = 1.2345677773685860e-317
-y-z = -0.0000000000000000
-y!=z
-sin(1.234567890123456789*x)/x = 1.234568
-x/10 = 1.2345662951716485e-318
-y-z = -0.0000000000000000
-y!=z
-sin(1.234567890123456789*x)/x = 1.234568
-x/10 = 1.2345712358281069e-319
-y-z = -0.0000000000000000
-y!=z
-sin(1.234567890123456789*x)/x = 1.234585
-x/10 = 1.2346700489572751e-320
-y-z = -0.0000000000000000
-y!=z
-sin(1.234567890123456789*x)/x = 1.234684
-x/10 = 1.2351641146031164e-321
-y-z = -0.0000000000000000
-y!=z
-sin(1.234567890123456789*x)/x = 1.232673
-x/10 = 1.2351641146031164e-322
-y-z = -0.0000000000000000
-y!=z
-sin(1.234567890123456789*x)/x = 1.250000
-x/10 = 9.8813129168249309e-324
-y-z = 0.0000000000000000
-y==z, gradual underflow: PASSED
-sin(1.234567890123456789*x)/x = 1.000000
-x/10 = 0.0000000000000000e+00
-y-z = 0.0000000000000000
-y==z, gradual underflow: PASSED
-sin(1.234567890123456789*x)/x = nan
-x/10 = 0.0000000000000000e+00
-y-z = 0.0000000000000000
-y==z, gradual underflow: PASSED
-sin(1.234567890123456789*x)/x = nan
-x/10 = 0.0000000000000000e+00
-y-z = 0.0000000000000000
-y==z, gradual underflow: PASSED
-sin(1.234567890123456789*x)/x = nan
+=================
+exp(x) reaches infinity for x = 1000.000000
+=================
 
+fp_infinity generated infinity
+Equivalence: inf equals to inf
+Infinity propogates
+computation of inf and INF = inf
+computation of inf and NINF = -inf
+computation of inf and NaN = nan
+
+=================
+-1.0/0.0
+=================
+
+fp_ninfinity generated negative infinity
+Equivalence: -inf equals to -inf
+Negative infinity propogates
+computation of -inf and INF = -inf
+computation of -inf and NINF = inf
+computation of -inf and NaN = nan
+
+=================
+0.0/0.0
+=================
+
+fp_nan generated Nan
+
+=================
+sqrt(-1.0)
+=================
+
+fp_nan generated Nan
+Equivalence: nan does not equal to nan
+NaN propogates
+computation of nan and INF = nan
+computation of nan and NINF = nan
+computation of nan and NaN = nan
+
+===================================================
+limit of log(x) as x approahces positive zero
+===================================================
+
+-706.893624
+-709.196209
+-711.498794
+-713.801379
+-716.103964
+-718.406549
+-720.709134
+-723.011719
+-725.314304
+-727.616889
+-729.919475
+-732.222061
+-734.524656
+-736.827241
+-739.131804
+-741.444340
+-743.746925
+-inf
+fp_signed_zero generated negative infinity
+-inf
+fp_signed_zero generated negative infinity
+
+===================================================
+limit of log(x) as x approahces negative zero
+===================================================
+
+nan
+fp_signed_zero generated Nan
+nan
+fp_signed_zero generated Nan
+nan
+fp_signed_zero generated Nan
+nan
+fp_signed_zero generated Nan
+nan
+fp_signed_zero generated Nan
+nan
+fp_signed_zero generated Nan
+nan
+fp_signed_zero generated Nan
+nan
+fp_signed_zero generated Nan
+nan
+fp_signed_zero generated Nan
+nan
+fp_signed_zero generated Nan
+nan
+fp_signed_zero generated Nan
+nan
+fp_signed_zero generated Nan
+nan
+fp_signed_zero generated Nan
+nan
+fp_signed_zero generated Nan
+nan
+fp_signed_zero generated Nan
+nan
+fp_signed_zero generated Nan
+nan
+fp_signed_zero generated Nan
+-inf
+fp_signed_zero generated negative infinity
+-inf
+fp_signed_zero generated negative infinity
+
+===================================================
+limit of sin(x)/x as x approahces positive zero
+===================================================
+
+1.000000
+1.000000
+1.000000
+1.000000
+1.000000
+1.000000
+1.000000
+1.000000
+1.000000
+1.000000
+1.000000
+1.000000
+1.000000
+1.000000
+1.000000
+1.000000
+1.000000
+nan
+fp_signed_zero generated Nan
+nan
+fp_signed_zero generated Nan
+
+===================================================
+limit of sin(x)/x as x approahces negative zero
+===================================================
+
+1.000000
+1.000000
+1.000000
+1.000000
+1.000000
+1.000000
+1.000000
+1.000000
+1.000000
+1.000000
+1.000000
+1.000000
+1.000000
+1.000000
+1.000000
+1.000000
+1.000000
+nan
+fp_signed_zero generated Nan
+nan
+fp_signed_zero generated Nan
+
+===================================================
+limit of sin(x)/|x| as x approahces negative zero
+===================================================
+
+-1.000000
+-1.000000
+-1.000000
+-1.000000
+-1.000000
+-1.000000
+-1.000000
+-1.000000
+-1.000000
+-1.000000
+-1.000000
+-1.000000
+-1.000000
+-1.000000
+-1.000000
+-1.000000
+-1.000000
+nan
+fp_signed_zero generated Nan
+nan
+fp_signed_zero generated Nan
+
+=================
+x-y
+=================
+
+-0.0000000000000000
+-0.0000000000000000
+fp_underflow generated negative zero
+-0.0000000000000000
+fp_underflow generated negative zero
+-0.0000000000000000
+fp_underflow generated negative zero
+-0.0000000000000000
+fp_underflow generated negative zero
+-0.0000000000000000
+fp_underflow generated negative zero
+-0.0000000000000000
+fp_underflow generated negative zero
+-0.0000000000000000
+fp_underflow generated negative zero
+-0.0000000000000000
+fp_underflow generated negative zero
+-0.0000000000000000
+fp_underflow generated negative zero
+-0.0000000000000000
+fp_underflow generated negative zero
+-0.0000000000000000
+fp_underflow generated negative zero
+-0.0000000000000000
+fp_underflow generated negative zero
+-0.0000000000000000
+fp_underflow generated negative zero
+-0.0000000000000000
+fp_underflow generated negative zero
+-0.0000000000000000
+fp_underflow generated negative zero
+0.0000000000000000
+fp_underflow generated positive zero
+0.0000000000000000
+fp_underflow generated positive zero
+0.0000000000000000
+fp_underflow generated positive zero
+
+=================
+x/y
+=================
+
+0.9629629629629629
+0.9629629629629630
+0.9629629629629628
+0.9629629629629542
+0.9629629629629847
+0.9629629629620955
+0.9629629629391069
+0.9629629627677765
+0.9629629653485748
+0.9629629651317011
+0.9629630822435588
+0.9629633967103298
+0.9629629629629629
+0.9628220140515222
+0.9619883040935673
+0.9705882352941176
+1.0000000000000000
+nan
+fp_underflow generated Nan
+nan
+fp_underflow generated Nan
+
+==================================
+sin(1.23456789012345 * x)/x
+==================================
+
+1.234568
+1.234568
+1.234568
+1.234568
+1.234568
+1.234568
+1.234568
+1.234568
+1.234568
+1.234568
+1.234568
+1.234568
+1.234585
+1.234684
+1.232673
+1.250000
+1.000000
+nan
+fp_underflow generated Nan
+nan
+fp_underflow generated Nan

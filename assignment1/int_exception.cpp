@@ -1,24 +1,12 @@
-//#include <iostream>
 #include "int_exception.h"
-using namespace std;
+#include "helpers.h"
 
+char int_buffer[200];
 
 int factorial(int x)
 {
 	if(x == 0) return 1;
 	return x*factorial(x-1);
-}
-
-void integer_overflow(void)
-{
-	cout << "integer overflow observation: factorial" << endl;
-
-	int x = factorial(15);
-	cout << "15! = " << factorial(15) << endl;
-
-	//check if overflows
-	for(int i = 1; i <= 15; i++) x /= i; 
-	if (x != 1) cout << "integer overflowed" << endl;
 }
 
 int int_division(int x, int y)
@@ -27,19 +15,30 @@ int int_division(int x, int y)
 	else return x/y;
 }
 
-void divide_by_zero()
+void int_overflow(void)
 {
-	cout << "divide by zero observation" << endl;
-	int m = 10, n = 0;
+	int n = 15;
+	int x = factorial(n);
+	sprintf(int_buffer, "\n================\n15!\n================\n");
+	write_log(int_buffer);
+	check_factorial_overflow(x, n, __func__);
+}
+
+
+void int_zerodiv(void)
+{
+	sprintf(int_buffer, "\n================\n2/0\n================\n");
+	write_log(int_buffer);
 
 	try
 	{
-		int result = int_division(m, n);
-		printf("%d/%d = %d", m, n, result);
+		int zero = 0;
+		int result = int_division(2, zero);	
 	}
-	catch(exception& e)
+	catch(std::exception& e)
 	{
-		cout << "Exception: " << e.what() << endl;
+		sprintf(int_buffer, "Exception: %s\n", e.what());
+		write_log(int_buffer);
 	}
 }
 

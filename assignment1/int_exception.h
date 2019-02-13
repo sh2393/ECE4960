@@ -16,9 +16,9 @@ class MyException: public std::exception
 };
 
 
-void integer_overflow(void);
+void int_overflow(void);
 
-void divide_by_zero(void);
+void int_zerodiv(void);
 
 #endif
 
