@@ -9,4 +9,3 @@ pi: pi.cpp
 
 clean:
 	rm -f main
-	rm log.txt

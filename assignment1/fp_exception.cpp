@@ -17,6 +17,7 @@ void fp_overflow(void)
 	sprintf(buffer, "\n=================\nDBL_MAX*DBL_MAX\n=================\n");
 	write_log(buffer);
 	check_float(dsquare, __func__);
+	if(!pass_fp_overflow(dsquare)) report_violation(__func__);
 
 	check_equal(dsquare, dsquare);
 	propogate(dsquare);
@@ -29,6 +30,7 @@ void fp_infinity(void)
 	sprintf(buffer, "\n=================\n1.0/0.0\n=================\n");
 	write_log(buffer);
 	check_float(pos_inf, __func__);
+	if(!pass_fp_inf(pos_inf)) report_violation(__func__);
 
 	//
 	double exponent = 1000;
@@ -36,6 +38,7 @@ void fp_infinity(void)
 	sprintf(buffer, "\n=================\nexp(x) reaches infinity for x = %f\n=================\n", exponent);
 	write_log(buffer);
 	check_float(result, __func__);
+	if(!pass_fp_inf(result)) report_violation(__func__);
 
 	check_equal(result, result);
 	propogate(result);
@@ -50,6 +53,7 @@ void fp_ninfinity(void)
 	sprintf(buffer, "\n=================\n-1.0/0.0\n=================\n");
 	write_log(buffer);
 	check_float(neg_inf, __func__);
+	if(!pass_fp_ninf(neg_inf)) report_violation(__func__);
 
 	check_equal(neg_inf, neg_inf);
 	propogate(neg_inf);
@@ -64,12 +68,14 @@ void fp_nan(void)
 	sprintf(buffer, "\n=================\n0.0/0.0\n=================\n");
 	write_log(buffer);
 	check_float(result, __func__);
+	if(!pass_fp_nan(result)) report_violation(__func__);
 
 	//
 	double imaginary = sqrt(-1.0);
 	sprintf(buffer, "\n=================\nsqrt(-1.0)\n=================\n");
 	write_log(buffer);
 	check_float(imaginary, __func__);
+	if(!pass_fp_nan(result)) report_violation(__func__);
 	
 	check_equal(result, result);
 	propogate(result);
@@ -108,23 +114,23 @@ void fp_signed_zero(void)
 		for(int i = 1; i < 20; i++){
 			if(nfunc == 1){
 				temp = log(px);
-				sprintf(buffer, "%f", temp);
+				sprintf(buffer, "x = %.16e, result = %f", px, temp);
 				write_log(buffer);
 			}else if(nfunc == 2){
 				temp = log(nx);
-				sprintf(buffer, "%f", temp);
+				sprintf(buffer, "x = %.16e, result = %f", nx, temp);
 				write_log(buffer);
 			}else if(nfunc == 3){
 				temp = sin(px)/px;
-				sprintf(buffer, "%f", temp);
+				sprintf(buffer, "x = %.16e, result = %f", px, temp);
 				write_log(buffer);
 			}else if(nfunc == 4){
 				temp = sin(nx)/nx;
-				sprintf(buffer, "%f", temp);
+				sprintf(buffer, "x = %.16e, result = %f", nx, temp);
 				write_log(buffer);
 			}else{
 				temp = sin(nx)/px;
-				sprintf(buffer, "%f", temp);
+				sprintf(buffer, "x = %.16e, result = %f", nx, temp);
 				write_log(buffer);
 			}
 			px/=10.0;
@@ -168,18 +174,21 @@ void fp_underflow(void)
 				temp = x-y;
 				sprintf(buffer, "%.16f", temp);
 				write_log(buffer);
+				if(!pass_fp_underflow(x, y)) report_violation(__func__);
 			}else if (nfunc == 2){
 				temp = x/y;
 				sprintf(buffer, "%.16f", temp);
 				write_log(buffer);
+				if(!pass_fp_underflow(x, y)) report_violation(__func__);
 			}else{
 				temp = sin(1.234567890123456789*x)/x;
-				sprintf(buffer, "%f", temp);
+				sprintf(buffer, "%.16f", temp);
 				write_log(buffer);
 			}
 			x/=10; 
 			y/=10;
 			check_float(temp, __func__);
+
 		}
 		
 		

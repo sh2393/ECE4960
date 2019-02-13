@@ -12,8 +12,16 @@ void propogate(double x);
 void interact(double x);
 
 //report funciton
-bool pass_underflow(double y, double z);
-
+bool pass_int_overflow(int x);
+bool pass_int_divzero(int x);
+bool pass_fp_overflow(double x);
+bool pass_fp_inf(double x);
+bool pass_fp_ninf(double x);
+bool pass_fp_nan(double x);
+bool pass_fp_poszero(double x);
+bool pass_fp_negzero(double x);
+bool pass_fp_underflow(double y, double z);
+void report_violation(const char* func_name);
 
 //File I/O
 void check_factorial_overflow(int x, int n, const char * func_name);

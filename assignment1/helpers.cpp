@@ -81,10 +81,54 @@ void interact(double x){
 /******************************************
 Report Functions
 ******************************************/
-bool pass_underflow(double y, double z){
+
+
+bool pass_int_overflow(int x){
+	if (x > INT_MIN && x < INT_MAX) return true;
+	else return false;
+}
+bool pass_int_divzero(int x){
+	if (x > INT_MIN && x < INT_MAX) return true;
+	else return false;
+}
+
+bool pass_fp_overflow(double x){
+	if (isINF(x)) return true;
+	else return false;
+}
+
+bool pass_fp_inf(double x){
+	if (isINF(x)) return true;
+	else return false;
+}
+
+bool pass_fp_ninf(double x){
+	if (isNINF(x)) return true;
+	else return false;
+}
+bool pass_fp_nan(double x){
+	if (isNan(x)) return true;
+	else return false;
+}
+bool pass_fp_poszero(double x){
+	if (isPositiveZero(x)) return true;
+	else return false;
+}
+bool pass_fp_negzero(double x){
+	if (isNegativeZero(x)) return true;
+	else return false;
+}
+
+bool pass_fp_underflow(double y, double z){
 	if( (y == z) && (y-z == 0)) return true;
 	if( (y != z) && (y-z == 0)) return false;
 	else return true;
+}
+
+void report_violation(const char* func_name){
+	freopen("report.txt", "a", stdout);
+	printf("%s violated IEEE standard.\n", func_name);
+	fclose(stdout);
 }
 
 /******************************************
@@ -95,7 +139,7 @@ void check_factorial_overflow(int x, int n, const char* func_name){
 	freopen("log.txt", "a", stdout);
 	for(int i = 1; i <= n; i++) x /= i; 
 	if (x != 1) {
-		printf("%d! generated integer overflow", n);
+		printf("%s %d! generated integer overflow", func_name, n);
 	}
 	fclose(stdout);
 }

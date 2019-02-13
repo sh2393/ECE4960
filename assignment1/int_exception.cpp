@@ -22,6 +22,7 @@ void int_overflow(void)
 	sprintf(int_buffer, "\n================\n15!\n================\n");
 	write_log(int_buffer);
 	check_factorial_overflow(x, n, __func__);
+	if (!pass_int_overflow(x)) report_violation(__func__);
 }
 
 
@@ -34,6 +35,7 @@ void int_zerodiv(void)
 	{
 		int zero = 0;
 		int result = int_division(2, zero);	
+		if (!pass_int_divzero(result)) report_violation(__func__);
 	}
 	catch(std::exception& e)
 	{
