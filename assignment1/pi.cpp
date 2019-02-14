@@ -1,42 +1,31 @@
 // Code adapted from https://crypto.stanford.edu/pbc/notes/pi/code.html
+// Euler's Convergence Improvements
+// every 14 terms gives 4 digits, thus the magnifying factor is pow(10, 4)
 
 #include <stdio.h>
-#include <cmath>
-#define PRECISION 106
 
-void stanford_pi(){
-	int r[PRECISION];
-    int i, k;
-    int b, d;
-    int c = 0;
-
-    //Initialization
-    for (i = 0; i < PRECISION; i++) r[i] = 2000;
-    
-
-    for (k = PRECISION; k > 0; k -= 14) {
-        d = 0;
-
-        i = k;
-        while(1) {
-            d += r[i] * 10000;
-            b = 2 * i - 1;
-
-            r[i] = d % b;
-            d /= b;
-            i--;
-            if (i == 0) break;
-            d *= i;
-        }
-        printf("%.4d", c + d / 10000);
-        c = d % 10000;
-    }
-    printf("\n");
-}
-
-
+#define MAGNIFYING_FACTOR 10000
+#define PRECISION 120
 
 int main() {
-    my_pi();
+    int pi[PRECISION];
+    int carry = 0;
+
+    for (int i = 0; i < PRECISION; i++) pi[i] = 2;
+
+    for (int k = PRECISION; k > 0; k -= 14) {
+        int sum = 0;
+
+        for(int i = k; i > 0; --i){
+            sum = sum * i + pi[i] * MAGNIFYING_FACTOR; //numerator accumulate
+            int denom = 2*i-1;
+            pi[i] = sum % denom;
+            sum /= denom;
+        }
+
+        printf("%.4d ", carry + sum / MAGNIFYING_FACTOR);
+        carry = sum % MAGNIFYING_FACTOR;
+    }
+    printf("\n");
     return 0;
 }

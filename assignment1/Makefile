@@ -9,3 +9,4 @@ pi: pi.cpp
 
 clean:
 	rm -f main
+	rm -f *.o

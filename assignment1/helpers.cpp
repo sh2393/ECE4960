@@ -132,9 +132,8 @@ void report_violation(const char* func_name){
 }
 
 /******************************************
-File I/O
+Log functions
 ******************************************/
-
 void check_factorial_overflow(int x, int n, const char* func_name){
 	freopen("log.txt", "a", stdout);
 	for(int i = 1; i <= n; i++) x /= i; 
@@ -164,6 +163,9 @@ void check_float(double x, const char* func_name){
 	fclose(stdout);
 }
 
+/******************************************
+File I/O
+******************************************/
 void write_log(char* details){
 	freopen("log.txt", "a", stdout);
 	printf("%s\n", details);
