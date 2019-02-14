@@ -1,6 +1,14 @@
-/* check.h
- * Header file for check.cpp. Used to generate IEEE compliance report for floating point exception
- */
+/*H**********************************************************************
+* FILENAME :        helpers.h          
+*
+* DESCRIPTION :
+* 		Header file for helpers.cpp. Used to generate IEEE compliance report for floating point exception
+*
+* AUTHOR :    Joyce Huang (sh2393:Cornell University)        START DATE :    1 Feb 2019
+*
+* UPDATE :	 13 Feb 2019
+*
+*H*/
 
 #ifndef HELPERS_H
 #define HELPERS_H

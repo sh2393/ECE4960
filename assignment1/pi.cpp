@@ -1,6 +1,21 @@
-// Code adapted from https://crypto.stanford.edu/pbc/notes/pi/code.html
-// Euler's Convergence Improvements
-// every 14 terms gives 4 digits, thus the magnifying factor is pow(10, 4)
+/*H**********************************************************************
+* FILENAME :        main.cpp         
+*
+* DESCRIPTION :
+*       Generateing pi to 30 precision.
+*
+* NOTES :
+*   Code adapted from https://crypto.stanford.edu/pbc/notes/pi/code.html
+*   Euler's Convergence Improvements
+*   every 14 terms gives 4 digits, thus the magnifying factor is pow(10, 4)
+*
+* AUTHOR :    Joyce Huang (sh2393:Cornell University)        START DATE :    1 Feb 2019
+*
+* UPDATE :   13 Feb 2019
+*
+*H*/
+
+
 
 #include <stdio.h>
 

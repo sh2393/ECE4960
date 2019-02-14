@@ -1,3 +1,15 @@
+/*H**********************************************************************
+* FILENAME :        int_exception.cpp         
+*
+* DESCRIPTION :
+* 		Implement integer exception checks
+*
+* AUTHOR :    Joyce Huang (sh2393:Cornell University)        START DATE :    1 Feb 2019
+*
+* UPDATE :	 13 Feb 2019
+*
+*H*/
+
 #include "int_exception.h"
 #include "helpers.h"
 

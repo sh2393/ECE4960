@@ -1,3 +1,21 @@
+/*H**********************************************************************
+* FILENAME :        fp_exception.cpp            
+*
+* DESCRIPTION :
+*       Floating point exception handling implementation.
+*
+*
+* NOTES :
+*       ECE4960 Programming Assignment 1
+* 		Arithmetic Exception Handling
+*		Floating point exception checks: infinity, positive inifiniy, NaN, overflow, underflow, signed zero
+* 
+* AUTHOR :    Joyce Huang (sh2393:Cornell University)        START DATE :    1 Feb 2019
+*
+* UPDATE :	 13 Feb 2019
+*
+*H*/
+
 #include "fp_exception.h"
 #include "helpers.h"
 #include <cmath>

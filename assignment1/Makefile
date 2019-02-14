@@ -1,4 +1,15 @@
-#Makefile for assignment 1
+#################################################
+# FILENAME :        Makefile       
+#
+# DESCRIPTION :
+# 		Makefile for Programming Assignment 1
+#
+# AUTHOR :    Joyce Huang (sh2393:Cornell University)        START DATE :    1 Feb 2019
+#
+# UPDATE :	 13 Feb 2019
+#################################################
+
+
 all: main
 
 main: main.cpp

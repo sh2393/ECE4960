@@ -1,3 +1,16 @@
+/*H**********************************************************************
+* FILENAME :        helpers.cpp             
+*
+* DESCRIPTION :
+*       Flag functions check for exception handling for both integer and floating point
+*		File I/O Helper functions for generating IEEE compliance report and log files
+*
+* AUTHOR :    Joyce Huang (sh2393:Cornell University)        START DATE :    1 Feb 2019
+*
+* UPDATE :	 13 Feb 2019
+*
+*H*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <cmath>

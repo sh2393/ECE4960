@@ -1,4 +1,15 @@
-//int exception header file
+/*H**********************************************************************
+* FILENAME :        int_exception.h         
+*
+* DESCRIPTION :
+* 		Integer exception checks header file
+*
+* AUTHOR :    Joyce Huang (sh2393:Cornell University)        START DATE :    1 Feb 2019
+*
+* UPDATE :	 13 Feb 2019
+*
+*H*/
+
 #ifndef INT_EXCEPTION_H
 #define INT_EXCEPTION_H
 
