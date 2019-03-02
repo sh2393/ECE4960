@@ -8,6 +8,7 @@
 *
 * UPDATE :	 13 Feb 2019
 *
+* TODO 	 : Check Propogation compliance
 *H*/
 
 #ifndef HELPERS_H

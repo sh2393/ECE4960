@@ -132,6 +132,7 @@ bool pass_fp_negzero(double x){
 	else return false;
 }
 
+//TODO
 bool pass_fp_underflow(double y, double z){
 	if( (y == z) && (y-z == 0)) return true;
 	if( (y != z) && (y-z == 0)) return false;
@@ -145,7 +146,7 @@ void report_violation(const char* func_name){
 }
 
 /******************************************
-Log functions
+Log report functions
 ******************************************/
 void check_factorial_overflow(int x, int n, const char* func_name){
 	freopen("log.txt", "a", stdout);

@@ -109,7 +109,7 @@ void fp_signed_zero(void)
 		double px = 1.0;
 		double nx = -1.0;
 		px *= pow(10, -307);
-		nx *= pow(10, -307);
+		nx *= pow(10, -307); //TODO
 
 		if(nfunc == 1){
 			sprintf(buffer, "\n===================================================\nlimit of log(x) as x approahces positive zero\n===================================================\n");

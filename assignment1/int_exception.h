@@ -7,7 +7,7 @@
 * AUTHOR :    Joyce Huang (sh2393:Cornell University)        START DATE :    1 Feb 2019
 *
 * UPDATE :	 13 Feb 2019
-*
+* TODO	: zero division var x-x
 *H*/
 
 #ifndef INT_EXCEPTION_H
@@ -26,9 +26,7 @@ class MyException: public std::exception
 	}
 };
 
-
 void int_overflow(void);
-
 void int_zerodiv(void);
 
 #endif
