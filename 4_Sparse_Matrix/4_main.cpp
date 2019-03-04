@@ -12,6 +12,29 @@ int main(){
 
 	Matrix matrix(val, row, col);
 
-    cout << matrix.retrieveElement(2, 1) << endl;
+	//4.1 CSR_matrix test functions
+	cout << matrix.rankMatrix() << endl;
+    cout << matrix.retrieveElement(2, 2) << endl;
+    cout << matrix.countElementMatrix() << endl;
+    matrix.printMatrix(); 
+
+ //    matrix.addElement(3, 2, 13);
+ //    cout << matrix.rankMatrix() << endl;
+ //    cout << matrix.retrieveElement(3, 2) << endl;
+ //    cout << matrix.countElementMatrix() << endl;
+	// matrix.printMatrix();   
+
+
+	// matrix.deleteElement(1, 1) ;
+	// cout << matrix.rankMatrix() << endl;
+ //    cout << matrix.retrieveElement(1, 1) << endl;
+ //    cout << matrix.countElementMatrix() << endl; 
+	// matrix.printMatrix();  
+
+	// matrix.rowPermute(0, 1);
+	// matrix.printMatrix();
+	matrix.rowScale(4, 2, 2);
+	matrix.printMatrix();
+
     return 0;
 }
