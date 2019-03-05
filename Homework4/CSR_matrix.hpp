@@ -35,7 +35,7 @@ public:
 	// add the ith row multiplied by a constant a to the jth row
 	int rowScale(int i, int j, int a);
 	//product of matrix A and vector x
-	int productAx(vector<int> x, vector<int> *result);
+	int productAx(vector<int> x, vector<int> result);
 
 };
 

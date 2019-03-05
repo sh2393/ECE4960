@@ -99,7 +99,7 @@ void Matrix::printMatrix(){
 /*
 Implementation ideas: 
 last element of rowptr would not change because size remain the same
-switch colInd places and values places
+switch colInd places and value places
 recalculate rowptr based on col subvector size 
 */
 
@@ -223,27 +223,25 @@ int Matrix::rowScale(int i, int j, int a){
 }
 
 //product of matrix A and vector x
-int Matrix::productAx(vector<int> x, vector<int> *result){
-	// copy the sparse matrix into three vectors
-    int currRow = 0;
-    int prevRow = 0;
-    int nonZero = 0;
-    
-    // Multiply the sparse matrix with vector x
-    for (int i=0; i <rowPtr.size()-1; i++) {
-        currRow = rowPtr[i+1];
-        prevRow = rowPtr[i];
-        nonZero = currRow - prevRow;
-        
-        // In row i, multiply column j by element j in the x vector and increment the sum by the multiplication
-        double cumu = 0;
-        for (int j = prevRow; j < (prevRow+nonZero); j++) {
-            cumu += (value[j] * (x)[colInd[j]]);
-        }
-        
-        // Push the sum into the next location in the b vector
-        result->push_back(cumu);
-    }
+int Matrix::productAx(vector<int> x, vector<int> result){
+
+	int col_iter = 0;
+	for(int j = 0; j < rowPtr.size()-1; j++){
+		int row_sum = 0;
+		for(int i = 0; i < x.size(); i++){
+			if (colInd[col_iter] == i){
+				row_sum += x[i]*value[col_iter];
+				col_iter++;
+			}
+		}
+		result.push_back(row_sum);
+	}
+	for(int i = 0; i < result.size(); i++){
+		cout << result[i] << " ";
+	}
+
+	cout << endl;
+
     return 0;
 }
 
