@@ -1,40 +1,76 @@
-//Linear Algebra and Sparse Matrices
-
 #include <iostream>
 #include <vector>
 #include <cmath>
 #include <functional>
 #include "CSR_matrix.hpp"
+using namespace std;
 
-//TODO: add and delete has to change row pointers 
+#define PROW 10
+#define PCOL 11
+#define PVAL 12
+
+//TODO: add() guard against existing element
 //TODO: check exceptions
 //TODO: figure out rowScale when i > j
 
-using namespace std;
 
-Matrix::Matrix(vector<int> val, vector<int> row, vector<int> col){
+
+Matrix::Matrix(){
+	rank = 0;
+	value = {};
+	rowPtr = {0};  
+	colInd = {};
+}
+
+Matrix::Matrix(vector<double> val, vector<int> row, vector<int> col){
 	value = val;
 	rowPtr = row;
 	colInd = col;
 	rank = *max_element(colInd.begin(), colInd.end())+1;
 }
 
-void Matrix::addElement(int ri, int ci, int val){
+//broken. do not call
+void Matrix::addElement(int ri, int ci, double val){
+	//if original matrix is empty, push value to the end
+
+	//if that row does not exist, then 
+
+	//if the row exist
+		//if the col exists: add to value
+		//if the col does not exist: insert
+
 	//inserting one element at row i so every i+1 row pointer has to plus 1
-	for(int i = ri+1; i < rowPtr.size(); i++) rowPtr[i]++;
+	if (rowPtr.size() == 0){
+		rowPtr.push_back(0);
+		rowPtr.push_back(1);
+		colInd.push_back(ci);
+		value.push_back(val);
+	}
+	else{
+		if (ri >= rowPtr.size()-1){
+			rowPtr.push_back(rowPtr[rowPtr.size()-1]+1);
+		}else{
+			for(int i = ri+1; i < rowPtr.size(); i++) rowPtr[i]++;
+		}
 
-	int start = rowPtr[ri];
-	int end = rowPtr[ri+1]; 
+		int start = rowPtr[ri];
+		int end = rowPtr[ri+1]; 
+		int found = 0;
 
-	for(int i = start; i < end; i++){
-		if (ci < colInd[i]){
-			colInd.insert(colInd.begin() + i, ci);
-			value.insert(value.begin() + i, val);
-			break;
+		for(int i = start; i < end; i++){
+			if (ci < colInd[i]){
+				colInd.insert(colInd.begin() + i, ci);
+				value.insert(value.begin() + i, val);
+				found = 1;
+				break;
+			}
+		}
+		
+		if(found == 0){
+			colInd.insert(colInd.begin() + end, ci);
+			value.insert(value.begin() + end, val);
 		}
 	}
-
-	//rank = *max_element(colInd.begin(), colInd.end())+1;
 }
 
 
@@ -51,7 +87,6 @@ void Matrix::deleteElement(int ri, int ci){
 	}
 
 	for(int i = ri+1; i < rowPtr.size(); i++) rowPtr[i]--;
-	//rank = *max_element(colInd.begin(), colInd.end())+1;	
 }
 
 double Matrix::retrieveElement(int ri, int ci){
@@ -81,12 +116,12 @@ void Matrix::printMatrix(){
 		int col_iter = rowPtr[i];
 		for(int j = 0; j < rank; j++){
 			if (j == colInd[col_iter]){
-				printf("%2d  ", value[val_iter]);
+				printf("%2.2f  ", value[val_iter]);
 				//cout << value[val_iter] << " ";
 				val_iter++;
 				col_iter++;
 			}else{
-				printf("%2d  ", 0);
+				printf("%2.2f  ", 0.0);
 			}
 		}
 		cout << endl;
@@ -119,14 +154,14 @@ int Matrix::rowPermute(int i, int j){
 
 	//extrac col informations
 	vector<int> row1_colInd;
-	vector<int> row1_val;
+	vector<double> row1_val;
 	for (int row1_iter = start1; row1_iter < end1; row1_iter++){ //iterate through col
 		row1_colInd.push_back(colInd[row1_iter]);
 		row1_val.push_back(value[row1_iter]);
 	}
 
 	vector<int> row2_colInd;
-	vector<int> row2_val;
+	vector<double> row2_val;
 	for (int row2_iter = start2; row2_iter < end2; row2_iter++){ //iterate through col
 		row2_colInd.push_back(colInd[row2_iter]);
 		row2_val.push_back(value[row2_iter]);
@@ -152,20 +187,20 @@ int Matrix::rowPermute(int i, int j){
 }
 
 // add the ith row multiplied by a constant a to the jth row
-int Matrix::rowScale(int i, int j, int a){
+int Matrix::rowScale(int i, int j, double a){
 	int start_i = rowPtr[i];
 	int end_i = rowPtr[j+1];
 	int start_j = rowPtr[j];
 	int end_j = rowPtr[j+1];
 
 
-	vector<int> row1_val;
+	vector<double> row1_val;
 	if(end_i-1-start_i == 0){
 		row1_val.push_back(value[start_i]);
 	}else if (end_i-1-start_i < 0){
 		return 0;
 	}else{
-		vector<int> row1_val_copy(value.begin() + start_i, value.begin() + end_i-1);
+		vector<double> row1_val_copy(value.begin() + start_i, value.begin() + end_i-1);
 		for(int k = 0; k < row1_val_copy.size(); k++){
 			row1_val.push_back(row1_val_copy[k]);
 		}
@@ -223,7 +258,7 @@ int Matrix::rowScale(int i, int j, int a){
 }
 
 //product of matrix A and vector x
-int Matrix::productAx(vector<int> x, vector<int> result){
+int Matrix::productAx(vector<double> x, vector<double> *result){
 
 	int col_iter = 0;
 	for(int j = 0; j < rowPtr.size()-1; j++){
@@ -234,14 +269,39 @@ int Matrix::productAx(vector<int> x, vector<int> result){
 				col_iter++;
 			}
 		}
-		result.push_back(row_sum);
+		result->push_back(row_sum);
 	}
-	for(int i = 0; i < result.size(); i++){
-		cout << result[i] << " ";
-	}
-
-	cout << endl;
 
     return 0;
 }
 
+//debugging helpers
+void Matrix::printmember(int option){
+
+	switch(option){
+		case PROW: 
+			for(int i = 0; i < rowPtr.size(); i++){
+				cout << rowPtr[i] << " ";
+			}
+			cout << endl;
+			break;
+
+		case PCOL:
+			for(int i = 0; i < colInd.size(); i++){
+				cout << colInd[i] << " ";
+			}
+			cout << endl;
+			break;
+
+		case PVAL:
+			for(int i = 0; i < value.size(); i++){
+				cout << value[i] << " ";
+			}
+			cout << endl;
+			break;
+
+	}
+
+
+}
+//end debugging

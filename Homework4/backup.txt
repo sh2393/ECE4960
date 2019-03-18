@@ -1,0 +1,47 @@
+
+void Matrix::addElement(int ri, int ci, double val){
+	printf("\n\n\naddElement %d, %d, %f\n", ri, ci, val);
+	//inserting one element at row i so every i+1 row pointer has to plus 1
+	if (rowPtr.size() == 0){
+		rowPtr.push_back(0);
+		rowPtr.push_back(1);
+		colInd.push_back(ci);
+		value.push_back(val);
+		printf("in if\n");
+	}
+	else{
+		printf("in else\n");
+
+		if (ri >= rowPtr.size()-1){
+			rowPtr.push_back(rowPtr[rowPtr.size()-1]+1);
+		}else{
+			for(int i = ri+1; i < rowPtr.size(); i++) rowPtr[i]++;
+		}
+
+		int start = rowPtr[ri];
+		int end = rowPtr[ri+1]; 
+		int found = 0;
+
+		for(int i = start; i < end; i++){
+			if (ci < colInd[i]){
+				colInd.insert(colInd.begin() + i, ci);
+				value.insert(value.begin() + i, val);
+				found = 1;
+				break;
+			}
+		}
+		
+		if(found == 0){
+			printf("insert not found\n");
+			colInd.insert(colInd.begin() + end, ci);
+			value.insert(value.begin() + end, val);
+		}
+	}
+
+	printf("print col\n");
+	printmember(PCOL);
+	printf("print val\n");
+	printmember(PVAL);
+	printf("print row\n");
+	printmember(PROW);
+}
