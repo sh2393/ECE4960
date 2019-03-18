@@ -31,14 +31,14 @@ double Matrix::retrieveElement(int x, int y) {
 }
 
 void Matrix::addElement(double val, int row, int col) {
-    int prevRowPtr = rowPtr[row];
+    int begin = rowPtr[row];
     int nextRowPtr = rowPtr[row+1];
     
     int inserted = 0;
     
     int zeroSum = 0, zeroSumLocation = 0;
     
-    for (int i=prevRowPtr; i<nextRowPtr; i++) {
+    for (int i=begin; i<nextRowPtr; i++) {
         
         if (inserted || zeroSum) break;
         
@@ -259,10 +259,10 @@ Matrix matrixAddition(Matrix A, Matrix B) {
 
     int counter = 0;
     for (int i = 0; i < max(numRow_B, numRow_A); i++) {
-        int prevRowPtr = B.rowPtr[i];
-        int currRowPtr = B.rowPtr[i+1];
+        int begin = B.rowPtr[i];
+        int end = B.rowPtr[i+1];
         
-        for (int j = prevRowPtr; j < currRowPtr; j++) {
+        for (int j = begin; j < end; j++) {
             double before = A.retrieveElement(i, B.colInd[j]);
             
             A.addElement(B.value[j], i, B.colInd[j]);
