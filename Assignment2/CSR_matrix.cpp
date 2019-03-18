@@ -13,48 +13,103 @@ March 18, 2019
 #include "CSR_matrix.h"
 
 using namespace std;
-#define MAX(x,y) ((x>y)?x:y)
 
+double Matrix::retrieveElement(int x, int y) {
 
-double computeError(Matrix *matrix, vector<double> *x, vector<double> *b) {    
-    vector<double> Ax;    
-    vector<double> B = *b;
-    
-    productAx(matrix, x, &Ax);
-    
-    double sumOfb = 0, sumOfbAx = 0;
-    
-    for (int i=0; i<B.size(); i++) {
-        sumOfb += pow(B[i],2);
-        B[i] -= Ax[i];
-    }
-    
-    for (int i=0; i<B.size(); i++) {
-        sumOfbAx += pow(B[i],2);
-    }
-    
-    double error = sqrt(sumOfbAx) / sqrt(sumOfb);
-
-    return error;
-}
-
-
-double retrieveElement(Matrix *matrix, int x, int y) {
-
-    int rowPointer = matrix->rowPtr[x+1];
-    int prePointer = matrix->rowPtr[x];
+    int rowPointer = rowPtr[x+1];
+    int prePointer = rowPtr[x];
     int non_zero = rowPointer - prePointer;
     
     for (int i = prePointer; i < (prePointer+non_zero); i++) {
-        if (matrix->colInd[i] == y) {
+        if (colInd[i] == y) {
             
-            return matrix->value[i];
+            return value[i];
         }
     }
     
     return 0;
 }
 
+void Matrix::addElement(double val, int row, int col) {
+    int prevRowPtr = rowPtr[row];
+    int nextRowPtr = rowPtr[row+1];
+    
+    int inserted = 0;
+    
+    int zeroSum = 0, zeroSumLocation = 0;
+    
+    for (int i=prevRowPtr; i<nextRowPtr; i++) {
+        
+        if (inserted || zeroSum) break;
+        
+
+        if (col == colInd[i]) {
+
+            if (value[i] + val == 0) {
+                zeroSum = 1;
+                zeroSumLocation = i;
+                
+            }
+            else {
+                value[i] += val;
+                inserted = 1;
+            }
+        }
+        
+
+        else if (col < colInd[i]) {
+            value.insert(value.begin() + i,val);
+            
+            colInd.insert(colInd.begin() + i,col);
+            inserted = 1;
+            
+            for (int i=row+1; i<rowPtr.size(); i++) rowPtr[i]++;
+        }
+    }
+    
+    if (zeroSum) {
+        value.erase(value.begin()+zeroSumLocation); // delete the value at this location
+        colInd.erase(colInd.begin() + zeroSumLocation); // delete the column at this location
+        for (int i=row+1; i<rowPtr.size(); i++) rowPtr[i]--;
+    }
+    
+    if (!inserted && !zeroSum) {
+        value.insert(value.begin() + nextRowPtr,val);
+        
+        colInd.insert(colInd.begin() + nextRowPtr,col);
+        
+        for (int i=row+1; i<rowPtr.size(); i++) rowPtr[i]++;
+    }
+    
+}
+
+void Matrix::productAx(vector<double> *x, vector<double> *b) {
+    int currRow = 0;
+    int prevRow = 0;
+    int nonZero = 0;
+    
+    for (int i=0; i <rowPtr.size()-1; i++) {
+        currRow = rowPtr[i+1];
+        prevRow = rowPtr[i];
+        nonZero = currRow - prevRow;
+        
+        double acc = 0;
+        for (int j = prevRow; j < (prevRow+nonZero); j++) {
+            acc += (value[j] * (*x)[colInd[j]]);
+        }        
+        b->push_back(acc);
+    }
+    
+}
+
+void Matrix::printMatrix() {
+    for (int row = 0; row < rowPtr.size()-1; row++) {
+        for (int col = 0; col < rowPtr.size()-1; col++) {
+            printf("%.5f ", retrieveElement(row, col)); 
+        }
+        printf("\n");
+    }
+}
 
 
 Matrix UpperMatrix(Matrix matrix) {
@@ -117,28 +172,6 @@ Matrix LowerMatrix(Matrix matrix) {
 }
 
 
-
-void productAx(Matrix *A, vector<double> *x, vector<double> *b) {
-    int currRow = 0;
-    int prevRow = 0;
-    int nonZero = 0;
-    
-    for (int i=0; i <A->rowPtr.size()-1; i++) {
-        currRow = A->rowPtr[i+1];
-        prevRow = A->rowPtr[i];
-        nonZero = currRow - prevRow;
-        
-        double acc = 0;
-        for (int j = prevRow; j < (prevRow+nonZero); j++) {
-            acc += (A->value[j] * (*x)[A->colInd[j]]);
-        }        
-        b->push_back(acc);
-    }
-    
-}
-
-
-
 Matrix InverseDiagonal(Matrix matrix) {
 
     Matrix inverse;
@@ -151,7 +184,7 @@ Matrix InverseDiagonal(Matrix matrix) {
     inverse.rowPtr.push_back(0);
     
     for (int i = 0; i < matrix.rowPtr.size()-1; i++) {
-        element = retrieveElement(&matrix,i,i);
+        element = matrix.retrieveElement(i,i);
         
         if (element) {
             inverse.value.push_back(1.0/element);
@@ -189,7 +222,7 @@ Matrix matrixMultiplier(Matrix A, Matrix B) {
     for (int row = 0; row < numRow_A; row++) {
         for (int col = 0; col < numCol_B; col++) {
             for (int index = A.rowPtr[j-1]; index < A.rowPtr[j]; index ++) {
-                sum += A.value[index] * retrieveElement(&B, A.colInd[index], col);
+                sum += A.value[index] * B.retrieveElement(A.colInd[index], col);
             }
             
             if (sum) {
@@ -206,60 +239,6 @@ Matrix matrixMultiplier(Matrix A, Matrix B) {
 
     
     return product;
-}
-
-
-void addElement(Matrix *matrix, double value, int row, int col) {
-    int prevRowPtr = matrix->rowPtr[row];
-    int nextRowPtr = matrix->rowPtr[row+1];
-    
-    int inserted = 0;
-    
-    int zeroSum = 0, zeroSumLocation = 0;
-    
-    for (int i=prevRowPtr; i<nextRowPtr; i++) {
-        
-        if (inserted || zeroSum) break;
-        
-
-        if (col == matrix->colInd[i]) {
-
-            if (matrix->value[i] + value == 0) {
-                zeroSum = 1;
-                zeroSumLocation = i;
-                
-            }
-            else {
-                matrix->value[i] += value;
-                inserted = 1;
-            }
-        }
-        
-
-        else if (col < matrix->colInd[i]) {
-            matrix->value.insert(matrix->value.begin() + i,value);
-            
-            matrix->colInd.insert(matrix->colInd.begin() + i,col);
-            inserted = 1;
-            
-            for (int i=row+1; i<matrix->rowPtr.size(); i++) matrix->rowPtr[i]++;
-        }
-    }
-    
-    if (zeroSum) {
-        matrix->value.erase(matrix->value.begin()+zeroSumLocation); // delete the value at this location
-        matrix->colInd.erase(matrix->colInd.begin() + zeroSumLocation); // delete the column at this location
-        for (int i=row+1; i<matrix->rowPtr.size(); i++) matrix->rowPtr[i]--;
-    }
-    
-    if (!inserted && !zeroSum) {
-        matrix->value.insert(matrix->value.begin() + nextRowPtr,value);
-        
-        matrix->colInd.insert(matrix->colInd.begin() + nextRowPtr,col);
-        
-        for (int i=row+1; i<matrix->rowPtr.size(); i++) matrix->rowPtr[i]++;
-    }
-    
 }
 
 
@@ -284,11 +263,11 @@ Matrix matrixAddition(Matrix A, Matrix B) {
         int currRowPtr = B.rowPtr[i+1];
         
         for (int j = prevRowPtr; j < currRowPtr; j++) {
-            double before = retrieveElement(&A, i, B.colInd[j]);
+            double before = A.retrieveElement(i, B.colInd[j]);
             
-            addElement(&A, B.value[j], i, B.colInd[j]);
+            A.addElement(B.value[j], i, B.colInd[j]);
             
-            double after = retrieveElement(&A, i, B.colInd[j]);
+            double after = A.retrieveElement(i, B.colInd[j]);
             if (after - before != B.value[j]) counter++;
         }
     }
@@ -297,35 +276,47 @@ Matrix matrixAddition(Matrix A, Matrix B) {
 }
 
 
-void printout(Matrix matrix) {
-    for (int row = 0; row < matrix.rowPtr.size()-1; row++) {
-        for (int col = 0; col < matrix.rowPtr.size()-1; col++) {
-            printf("%.5f ", retrieveElement(&matrix, row, col)); 
-        }
-        printf("\n");
+double residualNorm(Matrix *matrix, vector<double> *x, vector<double> *b) {    
+    vector<double> Ax;    
+    vector<double> B = *b;
+    
+    matrix->productAx(x, &Ax);
+    
+    double sumOfb = 0, sumOfbAx = 0;
+    
+    for (int i=0; i<B.size(); i++) {
+        sumOfb += pow(B[i],2);
+        B[i] -= Ax[i];
     }
+    
+    for (int i=0; i<B.size(); i++) {
+        sumOfbAx += pow(B[i],2);
+    }
+    
+    double error = sqrt(sumOfbAx) / sqrt(sumOfb);
+
+    return error;
 }
 
-vector<double> Jacobian(Matrix matrix, vector<double> b, vector<double> x, double errorTolerance) {
+vector<double> Jacobian(Matrix matrix, vector<double> b, vector<double> x, double epsilon) {
     
     Matrix Dinv = InverseDiagonal(matrix);        
     Matrix upper = UpperMatrix(matrix);
     Matrix lower = LowerMatrix(matrix);
     Matrix add = matrixAddition(upper, lower);
-    Matrix UnDinv = InverseDiagonal(Dinv);
     Matrix MMult = matrixMultiplier(Dinv,add);
     vector<double> Minit;
 
-    productAx(&Dinv, &b, &Minit);    
+    Dinv.productAx(&b, &Minit);    
 
     x = Minit;
     
     vector<double> tmp;
-    double error = errorTolerance+1;
+    double error = epsilon+1;
     int iterations=0;    
-    while (error > errorTolerance) {
+    while (error > epsilon) {
         iterations++;
-        productAx(&MMult, &x, &tmp);
+        MMult.productAx(&x, &tmp);
         
         x = {};
         for (int j = 0; j < tmp.size(); j++) {
@@ -333,12 +324,11 @@ vector<double> Jacobian(Matrix matrix, vector<double> b, vector<double> x, doubl
         }
 
         tmp = {};
-        error = computeError(&matrix,&x,&b);
+        error = residualNorm(&matrix,&x,&b);
         
     }
-    
-    cout << "Num iterations = " << iterations << endl;
-    cout << "Error = " << error << endl;
+    printf("Number of iterations: %d\n", iterations);
+    printf("Error = %.8e\n", error);
     
     return x;
 }

@@ -11,7 +11,7 @@ March 16, 2019
 using namespace std;
 
 int testLoad(Matrix *largeMatrix){
-    if (retrieveElement(largeMatrix, 1, 1) != 600 || retrieveElement(largeMatrix, 500, 30) != 0){
+    if (largeMatrix->retrieveElement(1, 1) != 600 || largeMatrix->retrieveElement(500, 30) != 0){
         fprintf(stderr, "%s", "retrieveElement Failed\n");
         return FAIL;
     }
@@ -24,7 +24,7 @@ int testUpperMatrix(Matrix matrix, Matrix upper) {
     
     for (int row = 0; row < numRow; row++) {
         for (int index = matrix.rowPtr[row]; index < matrix.rowPtr[row+1]; index++) {
-            double entry = retrieveElement(&upper, row, matrix.colInd[index]);
+            double entry = upper.retrieveElement(row, matrix.colInd[index]);
             if (matrix.colInd[index] > row) {
                 if (matrix.value[index] != entry) {
                     fprintf(stderr, "%s", "testUpperMatrix Failed\n");
@@ -43,7 +43,7 @@ int testLowerMatrix(Matrix matrix, Matrix lower) {
     
     for (int row = 0; row < numRow; row++) {
         for (int index = matrix.rowPtr[row]; index < matrix.rowPtr[row+1]; index++) {
-            double entry = retrieveElement(&lower, row, matrix.colInd[index]);
+            double entry = lower.retrieveElement(row, matrix.colInd[index]);
             if (matrix.colInd[index] >= row) {
                 if (entry != 0) {
                     fprintf(stderr, "%s", "testLowerrMatrix Failed\n");
@@ -63,7 +63,7 @@ int testLowerMatrix(Matrix matrix, Matrix lower) {
 int testInverseDiagonal(Matrix matrix, Matrix inverse) {
     int numRow = inverse.rowPtr.size()-1;
     for (int i = 0; i < numRow; i++) {
-        if (inverse.value[i] != 1.0/retrieveElement(&matrix, i, i)) {
+        if (inverse.value[i] != 1.0/matrix.retrieveElement(i, i)) {
             fprintf(stderr, "%s", "testInverseDiagonal Failed\n");
             return FAIL;
         }
@@ -79,7 +79,7 @@ int testProductAx(Matrix *matrix) {
     vector<double> identity;
     for (int i = 0; i <= 4999; i++) identity.push_back(1.0);
     
-    productAx(matrix, &identity, &funcResult);
+    matrix->productAx(&identity, &funcResult);
     
     int currRow = 0;
     int prevRow = 0;
