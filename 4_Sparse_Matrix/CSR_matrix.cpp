@@ -4,7 +4,7 @@
 #include <vector>
 #include <cmath>
 #include <functional>
-#include "4_1_CSR_matrix.h"
+#include "CSR_matrix.h"
 
 //TODO: add and delete has to change row pointers 
 //TODO: check exceptions
@@ -12,14 +12,23 @@
 
 using namespace std;
 
-Matrix::Matrix(vector<int> val, vector<int> row, vector<int> col){
+//initialize emptry martix
+Matrix::Matrix(){
+	value = {};
+	rowPtr = {0};
+	colInd = {};
+	rank = 0;
+}
+
+//initialize matrix with a given
+Matrix::Matrix(vector<double> val, vector<int> row, vector<int> col){
 	value = val;
 	rowPtr = row;
 	colInd = col;
 	rank = *max_element(colInd.begin(), colInd.end())+1;
 }
 
-void Matrix::addElement(int ri, int ci, int val){
+void Matrix::addElement(int ri, int ci, double val){
 	//inserting one element at row i so every i+1 row pointer has to plus 1
 	for(int i = ri+1; i < rowPtr.size(); i++) rowPtr[i]++;
 
@@ -81,12 +90,12 @@ void Matrix::printMatrix(){
 		int col_iter = rowPtr[i];
 		for(int j = 0; j < rank; j++){
 			if (j == colInd[col_iter]){
-				printf("%2d  ", value[val_iter]);
+				printf("%2.2f  ", value[val_iter]);
 				//cout << value[val_iter] << " ";
 				val_iter++;
 				col_iter++;
 			}else{
-				printf("%2d  ", 0);
+				printf("%2.2f  ", 0.0);
 			}
 		}
 		cout << endl;
@@ -152,7 +161,7 @@ int Matrix::rowPermute(int i, int j){
 }
 
 // add the ith row multiplied by a constant a to the jth row
-int Matrix::rowScale(int i, int j, int a){
+int Matrix::rowScale(int i, int j, double a){
 	int start_i = rowPtr[i];
 	int end_i = rowPtr[j+1];
 	int start_j = rowPtr[j];
@@ -222,27 +231,14 @@ int Matrix::rowScale(int i, int j, int a){
 	return SUCCESS;
 }
 
-//product of matrix A and vector x
-int Matrix::productAx(vector<int> x, vector<int> *result){
-	// copy the sparse matrix into three vectors
-    int currRow = 0;
-    int prevRow = 0;
-    int nonZero = 0;
-    
-    // Multiply the sparse matrix with vector x
+int Matrix::productAx(vector<double> x, vector<double> *result){    
     for (int i=0; i <rowPtr.size()-1; i++) {
-        currRow = rowPtr[i+1];
-        prevRow = rowPtr[i];
-        nonZero = currRow - prevRow;
-        
-        // In row i, multiply column j by element j in the x vector and increment the sum by the multiplication
-        double cumu = 0;
-        for (int j = prevRow; j < (prevRow+nonZero); j++) {
-            cumu += (value[j] * (x)[colInd[j]]);
-        }
-        
-        // Push the sum into the next location in the b vector
-        result->push_back(cumu);
+    	int start= rowPtr[i];
+        int end = rowPtr[i+1];
+               
+        double acc = 0;
+        for (int j = start; j < end; j++) acc += (value[j] * x[colInd[j]]);
+        result->push_back(acc);
     }
     return 0;
 }

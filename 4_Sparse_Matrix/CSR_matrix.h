@@ -12,30 +12,30 @@ using namespace std;
 class Matrix{
 private:
 	int rank;
-	vector<int> value;
+	vector<double> value;
 	vector<int> rowPtr;
 	vector<int> colInd;
 
 public:
 	Matrix();
 
-	Matrix(vector<int> val, vector<int> row, vector<int> col);
+	Matrix(vector<double> val, vector<int> row, vector<int> col);
 
-	void addElement(int ri, int ci, int value);
+	void addElement(int ri, int ci, double value);
 	void deleteElement(int ri, int ci);
 	double retrieveElement(int ri, int ci);
 	int rankMatrix();
 	int countElementMatrix();
 
+	//utility function
 	void printMatrix();
 
-	//4.2
 	//Swith i-th row and j-th row
 	int rowPermute(int i, int j);
 	// add the ith row multiplied by a constant a to the jth row
-	int rowScale(int i, int j, int a);
+	int rowScale(int i, int j, double a);
 	//product of matrix A and vector x
-	int productAx(vector<int> x, vector<int> *result);
+	int productAx(vector<double> x, vector<double> *result);
 
 };
 
