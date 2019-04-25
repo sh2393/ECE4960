@@ -38,47 +38,20 @@ void RK34_test(double t, double deltaT, double last) {
     double Er = 1e-4;
     double Ea = 1e-7;
     double deltaTZero = deltaT;
-    double timerequirement = time + deltaTZero;
+    double deadline = time + deltaTZero;
     double truth = last;
     
     printf("RK34_test\n");
     printf("%-15s%-15s%-15s%-15s%-15s\n", "Time", "Step", "Result", "Groundtruth", "Error");
     printf("%-15.5f%-15.5f%-15.5f%-15.5f%.5f%%\n",0.0,0.0,truth,truth,0.0);
     
-    double halfDeltaT, tempDeltaT, temphalfDeltaT;
+    double halfDeltaT;
     double time1, time2, time3, time4;
     double K1, K2, K3, K4;
     double x1, x2, x3, x4;
     double result, error;
     
     while (time < t) {
-        
-        if(time + deltaT > timerequirement) {
-            tempDeltaT = timerequirement - time;
-            temphalfDeltaT = tempDeltaT / 2;
-            
-            time1 = time;
-            x1 = last;
-            K1 = 4 * exp(0.8 * time1) - 0.5 * x1;
-            
-            time2 = time + temphalfDeltaT;
-            x2 = last + K1 * temphalfDeltaT;
-            K2 = 4 * exp(0.8 * time2) - 0.5 * x2;
-            
-            time3 = time + temphalfDeltaT;
-            x3 = last + K2 * temphalfDeltaT;
-            K3 = 4 * exp(0.8 * time3) - 0.5 * x3;
-            
-            time4 = time + tempDeltaT;
-            x4 = last + K3 * tempDeltaT;
-            K4 = 4 * exp(0.8 * time4) - 0.5 * x4;
-            
-            result = last + 1.0 / 6.0 * tempDeltaT * (K1 + 2.0 * K2 + 2.0 * K3 + K4);
-            
-            truth = ground_truth(timerequirement);
-            printf("%-15.5f%-15.5f%-15.5f%-15.5f%.5f%%\n", timerequirement, deltaT, result, truth, compute_error(truth,result));
-            timerequirement += deltaTZero;
-        }
         
         halfDeltaT = deltaT / 2;
         
@@ -106,10 +79,10 @@ void RK34_test(double t, double deltaT, double last) {
         deltaT = deltaT * pow((Er / (abs(error) / (abs(result) + Ea))), 1.0/3);
         last = result;
         
-        if(time == timerequirement) {
-            truth = ground_truth(timerequirement);
-            printf("%-15.5f%-15.5f%-15.5f%-15.5f%.5f%%\n", timerequirement, deltaT, result, truth, compute_error(truth,result));
-            timerequirement += deltaTZero;
+        if(time == deadline) {
+            truth = ground_truth(deadline);
+            printf("%-15.5f%-15.5f%-15.5f%-15.5f%.5f%%\n", deadline, deltaT, result, truth, compute_error(truth,result));
+            deadline += deltaTZero;
         }
     }
     printf("\n");

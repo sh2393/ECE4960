@@ -33,26 +33,26 @@ void run_test(double t, double deltaT, double last){
 
 int main(){
     //RC Model
-    Vector2d initialRC;
-    forwardEulerRC(STOP * NS, NS, initialRC);
-    forwardEulerRC(STOP * NS, STEP * NS, initialRC);
+    Vector2d RCVal;
+    forwardEulerRC(STOP * NS, NS, RCVal);
+    forwardEulerRC(STOP * NS, STEP * NS, RCVal);
     
-    RK4_RC(STOP * NS, NS, initialRC);
-    RK4_RC(STOP * NS, STEP * NS, initialRC);
+    RK4_RC(STOP * NS, NS, RCVal);
+    RK4_RC(STOP * NS, STEP * NS, RCVal);
     
-    RK34_RC(STOP * NS, NS, initialRC);
-    RK34_RC(STOP * NS, STEP * NS, initialRC);
+    RK34_RC(STOP * NS, NS, RCVal);
+    RK34_RC(STOP * NS, STEP * NS, RCVal);
     
     //EKV model
-    Vector2d initialEKV;
-    forwardEulerEKV(STOP * NS, NS, initialEKV);
-    forwardEulerEKV(STOP * NS, STEP * NS, initialEKV);
+    Vector2d EKVVal;
+    forwardEulerEKV(STOP * NS, NS, EKVVal);
+    forwardEulerEKV(STOP * NS, STEP * NS, EKVVal);
     
-    RK4_EKV(STOP * NS, NS, initialEKV);
-    RK4_EKV(STOP * NS, STEP * NS, initialEKV);
+    RK4_EKV(STOP * NS, NS, EKVVal);
+    RK4_EKV(STOP * NS, STEP * NS, EKVVal);
     
-    RK34_EKV(STOP * NS, NS, initialEKV);
-    RK34_EKV(STOP * NS, STEP * NS, initialEKV);
+    RK34_EKV(STOP * NS, NS, EKVVal);
+    RK34_EKV(STOP * NS, STEP * NS, EKVVal);
 
     //Run test
     double t = 5.0, deltaT = 1.0, last = 2.0;
