@@ -1,3 +1,15 @@
+/*H**********************************************************************
+* FILENAME :        ODESolver.cpp          
+*
+* DESCRIPTION :
+*       Solver Implmentation
+*
+* AUTHOR :    Joyce Huang (sh2393:Cornell University)        START DATE :    5 Apr 2019
+*
+* UPDATE :   21 Apr 2019
+*
+*H*/
+
 #include <iostream>
 #include <vector>
 #include <cmath>

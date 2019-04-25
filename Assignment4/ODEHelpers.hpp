@@ -1,3 +1,15 @@
+/*H**********************************************************************
+* FILENAME :        ODEHelpers.hpp          
+*
+* DESCRIPTION :
+*       Methods of helpers to be used in solver
+*
+* AUTHOR :    Joyce Huang (sh2393:Cornell University)        START DATE :    5 Apr 2019
+*
+* UPDATE :	 21 Apr 2019
+*
+*H*/
+
 #ifndef ODEhelper_hpp
 #define ODEhelper_hpp
 

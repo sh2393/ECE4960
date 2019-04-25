@@ -1,3 +1,15 @@
+/*H**********************************************************************
+* FILENAME :        ODESolver_test.cpp     
+*
+* DESCRIPTION :
+*       Test suite for each function
+*
+* AUTHOR :    Joyce Huang (sh2393:Cornell University)        START DATE :    5 Apr 2019
+*
+* UPDATE :   21 Apr 2019
+*
+*H*/
+
 #include <iostream>
 #include <vector>
 #include <cmath>

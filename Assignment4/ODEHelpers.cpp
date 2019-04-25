@@ -1,3 +1,15 @@
+/*H**********************************************************************
+* FILENAME :        ODEHelper.cpp        
+*
+* DESCRIPTION :
+*       ODEHelper implmeentation
+*       Extract the numbers for RC model and EKV models
+*
+* AUTHOR :    Joyce Huang (sh2393:Cornell University)        START DATE :    5 Apr 2019
+*
+* UPDATE :   21 Apr 2019
+*
+*H*/
 #include "ODEHelpers.hpp"
 
 double ground_truth(double t) {
@@ -19,7 +31,7 @@ double compute_current(double t) {
     else if (tDouble>1 && tDouble <= 10)    result =  0.1 / 1000.0;
     else if (tDouble > 10 && tDouble < 11)  result =  (0.1 - (tDouble - 10) * 0.1) / 1000.0;
     else                                    result =  0.0;
-    
+
     return result;
 }
 
