@@ -21,44 +21,42 @@
 
 using namespace std;
 
-void run_test(){
-	forwardEuler_test(5.0, 1.0, 2.0);
-    RK4_test(5.0, 1.0, 2.0);
-    RK34_test(5.0, 1.0, 2.0);
+#define NS 1E-9
+#define STEP 0.2
+#define STOP 100
+
+void run_test(double t, double deltaT, double last){
+	forwardEuler_test(t, deltaT, last);
+    RK4_test(t, deltaT, last);
+    RK34_test(t, deltaT, last);
 }
 
 int main(){
-
-	run_test();
-    
-
-    //RC
+    //RC Model
     Vector2d initialRC;
-    initialRC << 0.0, 0.0;
-    forwardEulerRC(100 * 1e-9, 1e-9, initialRC);
-    forwardEulerRC(100 * 1e-9, 0.2 * 1e-9, initialRC);
+    forwardEulerRC(STOP * NS, NS, initialRC);
+    forwardEulerRC(STOP * NS, STEP * NS, initialRC);
     
-    RK4_RC(100 * 1e-9, 1e-9, initialRC);
-    RK4_RC(100 * 1e-9, 0.2 * 1e-9, initialRC);
+    RK4_RC(STOP * NS, NS, initialRC);
+    RK4_RC(STOP * NS, STEP * NS, initialRC);
     
-    RK34_RC(100 * 1e-9, 1e-9, initialRC);
-    RK34_RC(100 * 1e-9, 0.2 * 1e-9, initialRC);
+    RK34_RC(STOP * NS, NS, initialRC);
+    RK34_RC(STOP * NS, STEP * NS, initialRC);
     
     //EKV model
     Vector2d initialEKV;
-    initialRC << 2.5, 2.5;
-    forwardEulerEKV(100 * 1e-9, 1e-9, initialEKV);
-    forwardEulerEKV(100 * 1e-9, 0.2 * 1e-9, initialEKV);
+    forwardEulerEKV(STOP * NS, NS, initialEKV);
+    forwardEulerEKV(STOP * NS, STEP * NS, initialEKV);
     
-    RK4_EKV(100 * 1e-9, 1e-9, initialEKV);
-    RK4_EKV(100 * 1e-9, 0.2 * 1e-9, initialEKV);
+    RK4_EKV(STOP * NS, NS, initialEKV);
+    RK4_EKV(STOP * NS, STEP * NS, initialEKV);
     
-    RK34_EKV(100 * 1e-9, 1e-9, initialEKV);
-    RK34_EKV(100 * 1e-9, 0.2 * 1e-9, initialEKV);
+    RK34_EKV(STOP * NS, NS, initialEKV);
+    RK34_EKV(STOP * NS, STEP * NS, initialEKV);
 
-	forwardEuler_test(5.0, 1.0, 2.0);
-	RK4_test(5.0, 1.0, 2.0);
-    RK34_test(5.0, 1.0, 2.0);
+    //Run test
+    double t = 5.0, deltaT = 1.0, last = 2.0;
+	run_test(t, deltaT, last);
 
 	return 0;
 }
