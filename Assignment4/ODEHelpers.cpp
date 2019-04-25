@@ -63,4 +63,22 @@ Vector2d copmute_xK(Vector2d last, Vector2d Klast, double t, double tstep){
     return K;
 }
 
+Vector2d copmute_xK_RC(Vector2d last, Vector2d Klast, double t, double tstep){
+    double RC = 1.0e4 * 1.0e-12;
+    double C = 1.0e-12;
+
+    Vector2d K, x;
+    if (tstep == 0){
+        x(0) = last(0);
+        x(1) = last(1);
+    }else{
+        x(0) = last(0) + Klast(0)*tstep;
+        x(1) = last(1) + Klast(1)*tstep;
+    }
+    K(0) = (-1.0 *  (1.0 / RC + 1.0 / RC) * x(0) + 1.0 / RC * x(1) + compute_current(t) / C);
+    K(1) = (1.0 / RC * x(0) - (1.0 / RC + 1.0 / RC) * x(1));
+
+    return K;
+}
+
 
