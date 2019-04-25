@@ -322,6 +322,15 @@ void RK4_RC(double t, double deltaT, Vector2d last) {
     printf("\n");
 }
 
+vector<double> compute_time_RK4(double time, double deltaT){
+    vector<double> times;
+    double halfDeltaT = deltaT / 2;
+    times[0] = time;
+    times[1] = time + halfDeltaT;
+    times[2] = time + halfDeltaT;
+    times[3] = time + deltaT;
+    return times;
+}
 
 void RK4_EKV(double t, double deltaT, Vector2d last) {
     double time = 0.0;
@@ -332,6 +341,7 @@ void RK4_EKV(double t, double deltaT, Vector2d last) {
     double RC = 1.0e4 * 1.0e-12;
     double C = 1.0e-12;
     double Vdd = 5.0;
+
     while(time < t) {
         double halfDeltaT = deltaT / 2;
         double time1 = time;
@@ -339,34 +349,12 @@ void RK4_EKV(double t, double deltaT, Vector2d last) {
         double time3 = time + halfDeltaT;
         double time4 = time + deltaT;
         
-        Vector2d K1;
-        Vector2d x1;
-        x1(0) = last(0);
-        x1(1) = last(1);
-        K1(0) = (-1.0 / RC * last(0) + compute_current(time1) / C);
-        K1(1) = (-compute_currentEKV(x1(0), x1(1)) / 1e-12 - 1.0 / RC * x1(1) + Vdd / RC);
+        Vector2d K0, K1, K2, K3, K4;
+        K1 = copmute_xK(last, K0, time1, 0);
+        K2 = copmute_xK(last, K1, time2, halfDeltaT);
+        K3 = copmute_xK(last, K2, time3, halfDeltaT);
+        K4 = copmute_xK(last, K3, time4, deltaT);
         
-        Vector2d K2;
-        Vector2d x2;
-        x2(0) = last(0) + K1(0)*halfDeltaT;
-        x2(1) = last(1) + K1(1)*halfDeltaT;
-        K2(0) = (-1.0 / RC * x2(0) + compute_current(time2) / C);
-        K2(1) = (-compute_currentEKV(x2(0), x2(1)) / C - 1.0 / RC * x2(1) + Vdd / RC);
-        
-        
-        Vector2d K3;
-        Vector2d x3;
-        x3(0) = last(0) + K2(0)*halfDeltaT;
-        x3(1) = last(1) + K2(1)*halfDeltaT;
-        K3(0) = (-1.0 / RC * x3(0) + compute_current(time3) / C);
-        K3(1) = (-compute_currentEKV(x3(0), x3(1)) / C - 1.0 / RC * x3(1) + Vdd / RC);
-        
-        Vector2d K4;
-        Vector2d x4;
-        x4(0) = last(0) + K3(0)*deltaT;
-        x4(1) = last(1) + K3(1)*deltaT;
-        K4(0) = (-1.0 / RC * x4(0) + compute_current(time4) / C);
-        K4(1) = (-compute_currentEKV(x4(0), x4(1)) / C - 1.0 / RC * x4(1) + Vdd / RC);
         
         Vector2d result;
         result(0) = last(0) + 1.0 / 6.0 * deltaT * (K1(0) + 2.0 * K2(0) + 2.0 * K3(0) + K4(0));

@@ -32,6 +32,6 @@ double compute_error(double truth, double simulation);
 double compute_current(double t);
 double compute_currentEKV(double V1, double V2);
 
-
+Vector2d copmute_xK(Vector2d last, Vector2d Klast, double t, double tstep);
 
 #endif 

@@ -1,0 +1,159 @@
+/*H**********************************************************************
+* FILENAME :        ODESolver_test.cpp     
+*
+* DESCRIPTION :
+*       Test suite for each function
+*
+* AUTHOR :    Joyce Huang (sh2393:Cornell University)        START DATE :    5 Apr 2019
+*
+* UPDATE :   21 Apr 2019
+*
+*H*/
+
+#include <iostream>
+#include <vector>
+#include <cmath>
+#include "ODESolver.hpp"
+#include "ODEHelpers.hpp"
+
+//************TRUTH POINTS HELPERS ********************//
+vector<double> compute_params(double last, vector<double> times){ 
+    vector<double> Ks(4);
+    double x1 = last;
+    Ks[0] = 4 * exp(0.8 * times[0]) - 0.5 * x1;
+    
+    double x2 = last + Ks[0] * times[1];
+    Ks[1] = 4 * exp(0.8 * times[1]) - 0.5 * x2;
+    
+    double x3 = last + Ks[1] * times[1];
+    Ks[2] = 4 * exp(0.8 * times[1]) - 0.5 * x3;
+    
+    double x4 = last + Ks[2] * times[2];
+    Ks[3] = 4 * exp(0.8 * times[2]) - 0.5 * x4;
+    return Ks; 
+}
+
+vector<double> compute_params_RK4(double last, vector<double> times){ 
+    vector<double> Ks(4);
+    double x1 = last;
+    Ks[0] = 4 * exp(0.8 * times[0]) - 0.5 * x1;
+    
+    double x2 = last + Ks[0] * times[1];
+    Ks[1] = 4 * exp(0.8 * (times[1]+times[0])) - 0.5 * x2;
+    
+    double x3 = last + Ks[1] * times[1];
+    Ks[2] = 4 * exp(0.8 * (times[1]+times[0])) - 0.5 * x3;
+    
+    double x4 = last + Ks[2] * times[2];
+    Ks[3] = 4 * exp(0.8 * (times[2] +times[0])) - 0.5 * x4;
+    return Ks; 
+}
+
+vector<double> compute_times(double time, double deltaT){
+    vector<double> times(3);
+    times[0] = time;
+    times[1] = deltaT/2;
+    times[2] = deltaT;
+
+    return times;
+}
+
+double test_truth(vector<double> Ks, double last, double dtime){
+    return last + 1.0 / 6.0 * dtime * (Ks[0] + 2.0 * Ks[1] + 2.0 * Ks[2] + Ks[3]);
+}
+
+/////////////////////////BEGIN TEST HANDLER////////////////////////////////
+void forwardEuler_test(double t,double deltaT,double last) {
+    double time = 0.0;
+    double truth = last;
+    printf("forwardEuler_Test\n");
+    printf("%-15s%-15s%-15s%-15s\n", "Time", "Result", "Groundtruth", "Error");
+    printf("%-15.5f%-15.5f%-15.5f%.5f%%\n",0.0,1.0,truth,0.0);
+    
+    while(time < t) {
+        double result = (4 * exp(0.8 * time) - 0.5 * last) * deltaT + last;
+        last = result;
+        time += deltaT;
+        truth = ground_truth(time);
+        printf("%-15.5f%-15.5f%-15.5f%.5f%%\n", time,result,truth, compute_error(truth,result));
+    }
+    printf("\n");
+}
+
+
+
+void RK34_test(double t, double deltaT, double last) {
+    double time = 0.0;
+    double Er = 1e-4;
+    double Ea = 1e-7;
+    double deltaTZero = deltaT;
+    double timeDeadline = time + deltaTZero;
+    double truth = last;
+    
+    printf("RK34_test\n");
+    printf("%-15s%-15s%-15s%-15s%-15s\n", "Time", "Step", "Result", "Groundtruth", "Error");
+    printf("%-15.5f%-15.5f%-15.5f%-15.5f%.5f%%\n",0.0,0.0,truth,truth,0.0);
+    
+    vector<double> times(3), Ks(4);
+    double result, error;
+    
+    while (time < t) {
+        
+        if(time + deltaT > timeDeadline) {
+
+            times  = compute_times(time, timeDeadline);
+            Ks     = compute_params(last, times);
+            result = test_truth(Ks, last, times[2]);
+            truth  = ground_truth(timeDeadline);
+
+            printf("%-15.5f%-15.5f%-15.5f%-15.5f%.5f%%\n", timeDeadline, deltaT, result, truth, compute_error(truth,result));
+            timeDeadline += deltaTZero;
+        }
+        
+        times = compute_times(time, timeDeadline);
+        Ks    = compute_params(last, times);
+        result = test_truth(Ks, last, times[2]);
+        error = 1.0 / 72.0 * (-5.0 * Ks[0] + 6.0 * Ks[1] + 8.0 * Ks[2] - 9.0 * Ks[3]) * times[2];
+        
+        //Update variables
+        deltaT = times[2];
+        time  += deltaT;
+        deltaT = deltaT * pow((Er / (abs(error) / (abs(result) + Ea))), 1.0/3);
+        last = result;
+        
+        if(time == timeDeadline) {
+            truth = ground_truth(timeDeadline);
+            printf("%-15.5f%-15.5f%-15.5f%-15.5f%.5f%%\n", timeDeadline, deltaT, result, truth, compute_error(truth,result));
+            timeDeadline += deltaTZero;
+        }
+    }
+    printf("\n");
+    
+}
+
+void RK4_test(double t, double deltaT, double last) {
+    double time = 0.0;
+    double truth = last;
+    
+    printf("RK4_test\n");
+    printf("%-15s%-15s%-15s%-15s\n", "Time", "Result", "Groundtruth", "Error");
+    printf("%-15.5f%-15.5f%-15.5f%.5f%%\n",0.0,truth,truth,0.0);
+
+    vector<double> times(3), Ks(4);
+    double result;
+
+    while(time < t) {
+        times = compute_times(time, deltaT);
+        Ks    = compute_params(last, times);
+        result = test_truth(Ks, last, deltaT);
+        
+        last = result;
+        time += deltaT;
+        truth = ground_truth(time);
+        printf("%-15.5f%-15.5f%-15.5f%.5f%%\n", time,result,truth, compute_error(truth,result));
+        
+    }
+    printf("\n");
+}
+
+
