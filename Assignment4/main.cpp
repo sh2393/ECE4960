@@ -54,7 +54,7 @@ int main(){
     RK34_EKV(STOP * NS, NS, EKVVal);
     RK34_EKV(STOP * NS, STEP * NS, EKVVal);
 
-    //Run test
+    Run test
     double t = 5.0, deltaT = 1.0, last = 2.0;
 	run_test(t, deltaT, last);
 

@@ -3,6 +3,9 @@
 *
 * DESCRIPTION :
 *       Solver Implmentation
+*       In this implementation, forward Euler method and parameter extraction are inherited from the previous assignments.
+*       I have looked up vector manipulation and found that the eigen library is pretty useful. T
+*       Thus, I have migrated my code from a custom class of vectors to the eigen vectors.
 *
 * AUTHOR :    Joyce Huang (sh2393:Cornell University)        START DATE :    5 Apr 2019
 *
@@ -112,7 +115,7 @@ void RK34_EKV(double t, double deltaT, Vector2d last) {
     double deltaTZero = deltaT;
     double deadline = time + deltaTZero;
     
-    printf("RK34_RC      deltaT = %f\n",deltaT*1e9);
+    printf("RK34_EKV      deltaT = %f\n",deltaT*1e9);
     printf("%-15s%-15s%-15s%-15s\n", "Time", "Step","V1", "V2");
     printf("%-15.1f%-15.5f%-15.5f%-15.5f\n",0.0,deltaT*1e9,0.0,0.0);
     
@@ -199,7 +202,7 @@ void RK4_RC(double t, double deltaT, Vector2d last) {
 
 void RK4_EKV(double t, double deltaT, Vector2d last) {
     double time = 0.0;
-    printf("RK4_RC      deltaT = %f\n",deltaT*1e9);
+    printf("RK4_EKV      deltaT = %f\n",deltaT*1e9);
     printf("%-15s%-15s%-15s\n", "Time", "V1", "V2");
     printf("%-15.1f%-15.5f%-15.5f\n",0.0,0.0,0.0);
     
