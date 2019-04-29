@@ -18,12 +18,6 @@
 #include <sstream>
 using namespace std;
 
-//private helpers
-
-int NaN(double x) {
-    if (x > 0 || x <=0) return 0; 
-    else return 1; 
-}
 
 //public methods
 vector<vector<double>> Inverse(3, vector<double> (3, 0));

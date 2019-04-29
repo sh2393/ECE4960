@@ -1,4 +1,14 @@
-
+/*H**********************************************************************
+* FILENAME :        quasiNewton.cpp
+*
+* DESCRIPTION :
+*       Qausi Newton method. 
+*
+* AUTHOR :    Joyce Huang (sh2393:Cornell University)        START DATE :    5 Apr 2019
+*
+* UPDATE :   28 Apr 2019
+*
+*H*/
 #include <iostream>
 #include <cmath>
 #include <vector>
@@ -17,7 +27,6 @@ double delta_Is, delta_k, delta_Vth;
 
 double V_bound = 9999999999, delta_bound = 9999999999;
 
-//Initialize Hessian Matrix
 void computeDerivatives(void) {
     Hessian.val[0][0] = 0; 
     Hessian.val[1][1] = (V(Is,0.9999*k,Vth) - 2.0*V(Is,k,Vth) + V(Is,1.0001*k,Vth))/(1E-8)/pow(k,2); 
@@ -44,14 +53,11 @@ void QuasiNewton(void) {
     
     while (abs(V(Is,k,Vth)) > ROC) {
         i++;
-        
         printf("\nIs = %.16e, k = %f, Vth = %f\n", Is, k, Vth);
 
         double cur_V = V(Is,k,Vth);        
-        
         computeDerivatives();        
         addDelta();
-        
         double cur_delta = delta_norm();
         
         
@@ -62,13 +68,12 @@ void QuasiNewton(void) {
 
         V_bound = cur_V;
         delta_bound = cur_delta;
-
         
         double tempIs = Is, tempk = k, tempVth = Vth;
         for (int j=0; j<1000; j++) {
             if (abs(V(j*Is,j*k,j*Vth)) < abs(V(tempIs,tempk,tempVth))) {
-                tempIs = j*Is;
-                tempk = j*k;
+                tempIs  = j*Is;
+                tempk   = j*k;
                 tempVth = j*Vth;
             }
         }

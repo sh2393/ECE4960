@@ -31,14 +31,13 @@ extern double dIs, dk, dVth;
 extern double delta_V_Is, delta_V_k, delta_V_Vth, delta_Is, delta_k, delta_Vth;
 extern double optIs, optk, optVth;
 
+int NaN(double x) return (x > 0 || x <=0)? 0:1; 
 
 double V(double IS, double K, double VTH);
 
 void addDelta(void);
 
 double dVdIs(double IS, double K, double VTH);
-
-int NaN(double x);
 
 double delta_norm(void);
 

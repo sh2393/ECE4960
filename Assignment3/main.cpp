@@ -1,3 +1,18 @@
+/*H**********************************************************************
+* FILENAME :        main.cpp
+*
+* DESCRIPTION :
+*       Main progrma for parameter extraction. 
+*       Perform validataion.        
+*       Proces NMOS data. 
+*
+* AUTHOR :    Joyce Huang (sh2393:Cornell University)        START DATE :    5 Apr 2019
+*
+* UPDATE :   28 Apr 2019
+*
+*H*/
+
+
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -13,7 +28,7 @@ void readFile() {
     ifstream inputFile("outputNMOS.txt");
     string line;
 
-    inputFile >> line; //discard first line
+    inputFile >> line; 
 
     while (getline(inputFile, line)) {
 
