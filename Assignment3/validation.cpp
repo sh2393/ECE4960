@@ -1,4 +1,13 @@
-
+/*H**********************************************************************
+* FILENAME :        validation.cpp
+* DESCRIPTION :
+*       Validaiton for parameter extraction. Part of the methods.
+*
+* AUTHOR :    Joyce Huang (sh2393:Cornell University)        START DATE :    5 Apr 2019
+*
+* UPDATE :   28 Apr 2019
+*
+*H*/
 #include <cmath>
 #include <iostream>
 #include <vector>
@@ -52,11 +61,10 @@ pair<double, double> deltas(double a, double m){
 
 
 int validate(){
-	//constants
 	double c0 = 10.0;
 	double m = -0.5;
 
-	//Generate 10 samples of internally calculated values with random noises 
+    //This is can be done most easily with S = log(y),  x1 = log(x), a0 = c0 and a1 = m.  Generate 10 samples of Smeasured from internally calculated values with random noises within 10 – 20%.
 	srand((unsigned)time(0));
 	for(int i = 1; i <= 10; i++){
 		double noise = ((double) (rand() % 10 )+ 10 )/100.0;
