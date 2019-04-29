@@ -1,3 +1,15 @@
+/*H**********************************************************************
+* FILENAME :        parameExtraction.cpp
+*
+* DESCRIPTION :
+*       Construct a modular program that can accomplish least-square fitting and parameter extraction
+*
+* AUTHOR :    Joyce Huang (sh2393:Cornell University)        START DATE :    5 Apr 2019
+*
+* UPDATE :   28 Apr 2019
+*
+*H*/
+
 #include "paramExtraction.hpp"
 #include <cmath>
 #include <vector>
@@ -6,16 +18,19 @@
 #include <sstream>
 using namespace std;
 
+//private helpers
+
+int NaN(double x) {
+    if (x > 0 || x <=0) return 0; 
+    else return 1; 
+}
+
+//public methods
 vector<vector<double>> Inverse(3, vector<double> (3, 0));
 
 double det = 0;
 double dIs=0, dk=0, dVth=0;
 double delta_V_Is, delta_V_k, delta_V_Vth;
-
-int NotANumber(double x) {
-    if (x > 0 || x <=0) return 0; 
-    else return 1; 
-}
 
 
 double V(double IS, double K, double VTH) {

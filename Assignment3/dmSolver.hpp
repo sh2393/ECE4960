@@ -1,3 +1,15 @@
+/*H**********************************************************************
+* FILENAME :        dmSolver.hpp 
+*
+* DESCRIPTION :
+*       Header file for direct matrix implementation
+*
+* AUTHOR :    Joyce Huang (sh2393:Cornell University)        START DATE :    5 Apr 2019
+*
+* UPDATE :   28 Apr 2019
+*
+*H*/
+
 #ifndef _DMSOLVER_HPP
 #define _DMSOLVER_HPP
 
@@ -33,6 +45,7 @@ public:
 void Solver(DMMatrix system, vector<double> X);
 
 int verifySolver();
+
 #endif
 
 

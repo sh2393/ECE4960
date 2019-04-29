@@ -1,3 +1,18 @@
+/*H**********************************************************************
+* FILENAME :        dmSolver.cpp    
+*
+* DESCRIPTION :
+*       Direct matrix implementation
+*       This file implmenents the full matrix solver from scratch. 
+*       I created a matrix object that appends the solved coloumn at the last column of the original matrix.
+*       Then, the solver iterates through every solver, finds the pivot and alters the matrix to the solution.
+*
+* AUTHOR :    Joyce Huang (sh2393:Cornell University)        START DATE :    5 Apr 2019
+*
+* UPDATE :   28 Apr 2019
+*
+*H*/
+
 #include "dmSolver.hpp"
 #include <iostream>
 #include <cmath>
@@ -32,7 +47,6 @@ void DMMatrix::swapRow(int i, int j){
 void DMMatrix::rowScale(int i, int j, double c) {
 
     for (int k=0; k<dimension; k++) A[j][k]+=c*A[i][k];
-
     B[j] += B[i]*c;
 }
 

@@ -1,3 +1,19 @@
+/*H**********************************************************************
+* FILENAME :        fullMatrix.hpp
+*
+* DESCRIPTION :
+*       Full matrix helper operations  
+*       Helper methods implemented:
+*           compute_determinant() 
+*           compute_inverse()
+*
+*
+* AUTHOR :    Joyce Huang (sh2393:Cornell University)        START DATE :    5 Apr 2019
+*
+* UPDATE :   28 Apr 2019
+*
+*H*/
+
 #include "fullMatrix.hpp"
 
 double fullMatrix::compute_determinant(){

@@ -1,3 +1,15 @@
+/*H**********************************************************************
+* FILENAME :        parameExtraction.hpp
+*
+* DESCRIPTION :
+*       Parameter extraciton methods
+*
+* AUTHOR :    Joyce Huang (sh2393:Cornell University)        START DATE :    5 Apr 2019
+*
+* UPDATE :   28 Apr 2019
+*
+*H*/
+
 #ifndef paramExtraction_hpp
 #define paramExtraction_hpp
 
@@ -26,7 +38,7 @@ void addDelta(void);
 
 double dVdIs(double IS, double K, double VTH);
 
-int NotANumber(double x);
+int NaN(double x);
 
 double delta_norm(void);
 

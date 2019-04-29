@@ -1,3 +1,17 @@
+/*H**********************************************************************
+* FILENAME :        fullGriddedearch.cpp
+*
+* DESCRIPTION :
+*       Helper method for gridded search
+*       Public methods included in the methods header. 
+*
+* AUTHOR :    Joyce Huang (sh2393:Cornell University)        START DATE :    5 Apr 2019
+*
+* UPDATE :   28 Apr 2019
+*
+*H*/
+
+
 #include "methods.hpp"
 #include "paramExtraction.hpp"
 #include <cmath>

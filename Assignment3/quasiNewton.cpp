@@ -35,26 +35,33 @@ void computeDerivatives(void) {
 
 
 void QuasiNewton(void) {
-    Is = 1E-7; k = 1; Vth = 1;
-    int i=0; double ROC = 1E-10;
+    Is = 1E-7;
+    k = 1;
+    Vth = 1;
+    
+    int i=0;
+    double ROC = 1E-10;
     
     while (abs(V(Is,k,Vth)) > ROC) {
         i++;
         
-        printf("\nIs = %f, k = %f, Vth = %f\n", Is, k, Vth);
+        printf("\nIs = %.16e, k = %f, Vth = %f\n", Is, k, Vth);
 
         double cur_V = V(Is,k,Vth);        
-        V_bound = cur_V;
         
         computeDerivatives();        
         addDelta();
         
         double cur_delta = delta_norm();
-        delta_bound = cur_delta;
+        
         
         // Convergence Check
+        printf("||V||= %10f, ||delta|| = %10f\n", cur_V, cur_delta);
         printf("||V|| Convergence    : %s\n", (cur_V > V_bound)? "PASS\0" : "FAIL\0");
         printf("||delta|| Convergence: %s\n", (cur_delta > delta_bound)? "PASS\0" : "FAIL\0");
+
+        V_bound = cur_V;
+        delta_bound = cur_delta;
 
         
         double tempIs = Is, tempk = k, tempVth = Vth;
@@ -66,12 +73,12 @@ void QuasiNewton(void) {
             }
         }
         
-        if (!NotANumber(abs(V(Is,k,Vth))) && abs(V(Is,k,Vth)) < abs(V(optIs,optk,optVth))) {
+        if (!NaN(abs(V(Is,k,Vth))) && abs(V(Is,k,Vth)) < abs(V(optIs,optk,optVth))) {
             optIs = Is; optk = k; optVth = Vth;
         }
     }
 
     printf("Results\n");
-    printf("V  = %10f\nIs = %10f\nk  = %10f\nVth= %10f\n", V(optIs,optk,optVth), optIs, optk, optVth);
+    printf("V  = %10f\nIs = %.16e\nk  = %10f\nVth= %10f\n", V(optIs,optk,optVth), optIs, optk, optVth);
 }
 
