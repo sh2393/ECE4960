@@ -1,12 +1,5 @@
 #include "solver.h"
-const static IOFormat CSVFormat(StreamPrecision, DontAlignCols, ", ", "\n");
-const static IOFormat CleanFormat(4, 0, ", ", "\n", "[", "]");
-
-void writeToCSVfile(string name, ArrayXXd matrix)
-{
-    ofstream file(name.c_str());
-    file << matrix.format(CleanFormat);
- }
+#include "helpers.h"
 
 Solver::Solver(double dt_, double dx_, double theta_, double T_, int Nx_, int Nt_){
 	dt = dt_;
@@ -66,7 +59,7 @@ void Solver::computeRhs(double *result, double* u_1, double offDiagonalRhs, doub
 	for(int i = 2; i < Nx-2; i++ ){
 		result[i] = offDiagonalRhs * u_1[i-1] + diagonalRhs * u_1[i] + offDiagonalRhs * u_1[i+1];
 	}
-	result[Nx-2] = offDiagonalRhs * u_1[Nx-3] + diagonalRhs - u_1[Nx-2];
+	result[Nx-2] = offDiagonalRhs * u_1[Nx-3] + diagonalRhs * u_1[Nx-2];
 	result[0] = 0;
 	result[Nx-1] = 0;
 }
@@ -84,7 +77,7 @@ void Solver::gaussianSolver(double * result, double *u, double *u_1, double offD
 	g[Nx-1] = 0;
 	g[1] = diagonalLhs;
 	for(int i = 2; i < Nx-1; i++){
-		g[i] = diagonalLhs = pow(offDiagonalLhs, 2)/g[i-1];
+		g[i] = diagonalLhs - pow(offDiagonalLhs, 2)/g[i-1];
 		f[i] = result[i] - offDiagonalLhs*f[i-1]/g[i-1];
 	}
 
@@ -93,7 +86,7 @@ void Solver::gaussianSolver(double * result, double *u, double *u_1, double offD
 	u[Nx-1] = 0;
 	u[Nx-2] = f[Nx-2]/g[Nx-2];
 	for(int i = Nx-2; i>1; i--){
-		u[i-1] = (f[i-1] = offDiagonalLhs*u[i])/g[i-1];
+		u[i-1] = (f[i-1] - offDiagonalLhs*u[i])/g[i-1];
 	}
 
 	delete [] f;

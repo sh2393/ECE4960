@@ -13,6 +13,8 @@
 using namespace std;
 using namespace Eigen;
 
+
+
 class Solver{
 public:
 	Solver(double dt_, double dx_, double theta_, double T_, int Nx_, int Nt_);
